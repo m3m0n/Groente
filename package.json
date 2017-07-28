@@ -1,0 +1,25 @@
+{
+  "name": "groente",
+  "version": "1.0.0",
+  "description": "A webapp to track grocery prices",
+  "main": "groenteServer.js",
+  "scripts": {
+    "start": "node groenteServer.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m3m0n/Groente.git"
+  },
+  "keywords": [
+    "grocery",
+    "price",
+    "tracker"
+  ],
+  "author": "Shaun Memon",
+  "license": "ISC", 
+  "bugs": {
+    "url": "https://github.com/m3m0n/a2-memonsha/issues"
+  },
+  "homepage": "https://github.com/m3m0n/a2-memonsha#readme"
+},
