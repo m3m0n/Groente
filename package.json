@@ -17,9 +17,12 @@
     "tracker"
   ],
   "author": "Shaun Memon",
-  "license": "ISC", 
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/m3m0n/a2-memonsha/issues"
   },
-  "homepage": "https://github.com/m3m0n/a2-memonsha#readme"
-},
+  "homepage": "https://github.com/m3m0n/a2-memonsha#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
