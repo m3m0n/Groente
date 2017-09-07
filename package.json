@@ -5,6 +5,7 @@
   "main": "groenteServer.js",
   "scripts": {
     "start": "node groenteServer.js",
+    "dev": "nodemon groenteServer.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -19,10 +20,20 @@
   "author": "Shaun Memon",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/m3m0n/a2-memonsha/issues"
+    "url": "https://github.com/m3m0n/Groente/issues"
   },
-  "homepage": "https://github.com/m3m0n/a2-memonsha#readme",
+  "homepage": "https://github.com/m3m0n/Groente#readme",
   "dependencies": {
-    "express": "^4.15.3"
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "express-session": "^1.15.5",
+    "express-validator": "^4.1.1",
+    "mongo": "^0.1.0",
+    "mongodb": "^2.2.31",
+    "mongoose": "^4.11.10",
+    "mongoose-auto-increment": "^5.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^1.11.0"
   }
 }
