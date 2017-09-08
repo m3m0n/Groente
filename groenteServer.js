@@ -29,7 +29,6 @@ function error(code, string, res) {
 
 function createUser(req,res) {
 	if (!req.body.username ||
-		!req.body.email ||
 		!req.body.password) {
 		return error(403, "ERROR: createUser: required info not supplied", res);
 	}
@@ -39,11 +38,11 @@ function createUser(req,res) {
 		if (err) {
 			console.log(err);
 			return error(403, "ERROR: createUser: Failed to create user", res);
-		} else {
-			console.log("createUser: Successfully created user: " + JSON.stringify(results));
-			res.statusCode = 200;
-			return res.send(results);
-		}
+		} 
+
+		console.log("createUser: Successfully created user: " + JSON.stringify(results));
+		res.statusCode = 200;
+		return res.send(results);
 	});
 }
 
@@ -57,29 +56,29 @@ function createStore(req,res) {
 		if (err) {
 			console.log(err);
 			return error(403, "ERROR: createStore: Failed to create store", res);
-		} else {
-			console.log("createUser: Successfully created store: " + JSON.stringify(results));
-			res.statusCode = 200;
-			return res.send(results);
-		}
+		} 
+	
+		console.log("createUser: Successfully created store: " + JSON.stringify(results));
+		res.statusCode = 200;
+		return res.send(results);	
 	});
 }
 
-function createFood(req,res) {
-	if (!req.body.foodname) {
-		return error(403, "ERROR: createFood: Food name not supplied", res);
+function createFoodCategory(req,res) {
+	if (!req.body.category) {
+		return error(403, "ERROR: createFoodCategory: Category name not supplied", res);
 	}
 
-	console.log(Date() + 'createFood: Creating new food');
-	Models.Food(req.body).save( (err, results) => {
+	console.log(Date() + 'createFoodCategory: Creating new food');
+	Models.FoodCat(req.body).save( (err, results) => {
 		if (err) {
 			console.log(err);
-			return error(403, "ERROR: createFood: Failed to create food", res);
-		} else {
-			console.log("createFood: Successfully created food: " + JSON.stringify(results));
-			res.statusCode = 200;
-			return res.send(results);
-		}
+			return error(403, "ERROR: createFoodCategory: Failed to create food", res);
+		} 
+		
+		console.log("createFoodCategory: Successfully created food category: " + JSON.stringify(results));
+		res.statusCode = 200;
+		return res.send(results);
 	});
 }
 
@@ -134,8 +133,9 @@ function addPurchase(req,res) {
 
 app.post('/user', createUser);
 app.post('/store', createStore);
-app.post('/food', createFood);
 app.post('/purchase', addPurchase);
+// app.post('/food', createFood);
+app.post('/foodcat', createFoodCategory);
 
 app.listen(process.env.PORT || 3000);
 console.log('\n****Groente Server started @ ' + Date() + '\nListening on port 3000****\n');

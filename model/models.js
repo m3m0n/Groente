@@ -1,137 +1,50 @@
 const mongoose = require('mongoose');
-const autoIncrement = require('mongoose-auto-increment');
-const connection = mongoose.connect('mongodb://localhost/Groente');
+const connection = mongoose.connect('mongodb://localhost/GroenteTest', {
+  useMongoClient: true
+});
 // Doc for Mongoose Schemas: http://mongoosejs.com/docs/guide
 
-autoIncrement.initialize(connection);
 var Schema = mongoose.Schema;
 
 const userSchema = new Schema({
-	_id : {
-		type : Number
-	},
-	username : {
-		type : String,
-		required: true,
-		unique: true,
-	},
-	email : {
-		type : String,
-		validate: /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/,
-		unique : true,
-		required : true
-	},
-	password : {
-		type : String,
-		required : true
-	},
-	name : {
-		type: String,
-		default : ""
-	},
-	__v: {
-		type: Number, 
-		select: false
-	}
-}, {collection : 'users'});
+	username : { type: String, required: true,	unique: true },
+	password : { type: String, required: true },
+	name : { type: String, default: "" },
+	email : { type: String, unique: true, validate: /\b[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}\b/}, 
+});
+
 
 const storeSchema = new Schema({
-	_id : {
-		type: Number
-	}, 
-	storename : {
-		type: String, 
-		unique : true,
-		required:true
-	},
-	parent : {
-		type: String, 
-		default:""
-	},
-	address : {
-		type: String, 
-		default:""
-	},
-	__v: {
-		type: Number, 
-		select: false
-	}
-}, {collection : 'stores'});
-
-const foodSchema = new Schema({
-	_id : {
-		type: Number
-	}, 
-	foodname : {
-		type: String, 
-		required : true,
-		unique : true
-	},
-	category : {
-		type: String, 
-		default:""
-	},
-	units : {
-		type: String, 
-		default:""
-	},
-	__v: {
-		type: Number, 
-		select: false
-	}
-}, {collection : 'foods'});
+	storename : { type: String, required: true, unique: true },
+	parent : { type: String,  default: "" },
+	address : { type: String, default: "" },
+});
 
 const purchaseSchema = new Schema({
-	_id : {
-		type: Number
-	}, 
-	foodid : {
-		type : Number,
-		ref : 'foods',
-		required:true
-	},
-	storeid : {
-		type : Number,
-		ref : 'stores',
-		required:true
-	},
-	userid : {
-		type : Number,
-		ref : 'users',
-		required:true
-	},
-	unit_price : {
-		type: Number, 
-		required : true,
-		default: 0
-	},
-	entered_at : {
-		type: Date, 
-		required: true, 
-		default: Date
-	},
-	sale : {
-		type: Boolean, 
-		default: false
-	},
-	rating : {
-		type : Number,
-		default : 0
-	},
-	__v: {
-		type: Number, 
-		select: false
-	}
-}, {collection : 'purchases'});
+	storeid : { type: Schema.Types.ObjectId, ref: 'stores', required:true },
+	user : { type: Schema.Types.ObjectId, ref: 'users', required:true },
+	unitprice : { type: Number, required: true},
+	date : { type: Date, default: Date.now },
+	saleprice : { type: Boolean, default: false },
+	rating : { type: Number, min: 0, max: 5, default: 0 }
+});
 
-userSchema.plugin(autoIncrement.plugin, 'User');
-storeSchema.plugin(autoIncrement.plugin, 'Store');
-foodSchema.plugin(autoIncrement.plugin, 'Food');
-purchaseSchema.plugin(autoIncrement.plugin, 'Purchase');
+const foodSchema = new Schema({
+	name : {type: String, unique: true, default: "" },
+	purchases : [purchaseSchema]
+});
+
+const foodCatSchema = new Schema({
+	category : { type: String, required: true,	unique: true },
+	units : { type: String, default: "kg" },
+	foods : [foodSchema],
+});
+
 
 module.exports = {
-  User: mongoose.model('users', userSchema),
-  Store: mongoose.model('stores', storeSchema),
-  Food: mongoose.model('foods', foodSchema),
-  Purchase: mongoose.model('purchases', purchaseSchema)
+	User: mongoose.model('users', userSchema),
+	Store: mongoose.model('stores', storeSchema),
+	Purchase: mongoose.model('purchases', purchaseSchema),
+	Food: mongoose.model('foods', foodSchema),
+	FoodCat: mongoose.model('foodcat', foodCatSchema)
 };
